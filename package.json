@@ -10,6 +10,7 @@
     "clean": "npm cache clean --force && node -e \"const fs=require('fs');['.next','node_modules'].forEach((d)=>fs.rmSync(d,{recursive:true,force:true})); console.log('Removed .next and node_modules; npm cache cleaned.');\""
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.7.0",
     "motion": "^12.38.0",
     "next": "16.2.3",
