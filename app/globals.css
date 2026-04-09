@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-montserrat);
+
+  --color-brand-cream: #f5f2ed;
+  --color-brand-ink: #1a1a1a;
+  --color-brand-gold: #c5a059;
+}
+
+@layer base {
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    @apply bg-brand-cream text-brand-ink font-sans antialiased;
+  }
+}
