@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 // A clean architectural line grid — frame, grid and corner construction lines.
 // The lines continuously draw and retract, but on a SINGLE shared rhythm with a
@@ -20,6 +20,8 @@ const LINES = [
 ];
 
 export default function Blueprint({ className = "" }: { className?: string }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className={`pointer-events-none absolute inset-0 ${className}`} aria-hidden="true">
       <svg
@@ -37,13 +39,13 @@ export default function Blueprint({ className = "" }: { className?: string }) {
             strokeWidth={1}
             strokeOpacity={0.13}
             vectorEffect="non-scaling-stroke"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 1, 1, 0] }}
+            initial={reduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
+            animate={reduceMotion ? { pathLength: 1 } : { pathLength: [0, 1, 1, 0] }}
             transition={{
-              duration: 9,
+              duration: reduceMotion ? 0 : 9,
               times: [0, 0.42, 0.58, 1],
               ease: [0.45, 0, 0.55, 1],
-              repeat: Infinity,
+              repeat: reduceMotion ? 0 : Infinity,
               delay: i * 0.25,
             }}
           />

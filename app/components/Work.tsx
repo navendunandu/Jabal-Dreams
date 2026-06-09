@@ -8,7 +8,7 @@ import { useLang } from "./lang-context";
 import Reveal from "./Reveal";
 import CategoryCard from "./CategoryCard";
 
-export default function Work() {
+export default function Work({ showBrowseTile = true }: { showBrowseTile?: boolean }) {
   const { t } = useLang();
   const sub = t("work_sub")
     .replace("{n}", String(projects.length))
@@ -45,24 +45,25 @@ export default function Work() {
             </Reveal>
           ))}
 
-          {/* All-work tile */}
-          <Reveal delay={0.24}>
-            <Link
-              href={`/work/${categoryList[0]?.slug ?? ""}`}
-              className="group hidden lg:flex flex-col justify-between h-full min-h-[320px] border border-brand-ink/15 p-8 hover:bg-brand-ink hover:text-brand-cream transition-colors duration-500"
-            >
-              <span className="eyebrow text-brand-gold">{t("work_browse_label")}</span>
-              <div>
-                <h3 className="font-serif text-3xl font-light leading-tight mb-3">
-                  {t("work_browse_heading_plain")}{" "}
-                  <span className="italic">{t("work_browse_heading_emph")}</span>.
-                </h3>
-                <span className="inline-flex items-center gap-2 eyebrow text-[9px]">
-                  {t("work_browse_cta")} <ArrowUpRight className="w-3.5 h-3.5 rtl:-scale-x-100" />
-                </span>
-              </div>
-            </Link>
-          </Reveal>
+          {showBrowseTile && (
+            <Reveal delay={0.24}>
+              <Link
+                href="/work"
+                className="group hidden lg:flex flex-col justify-between h-full min-h-[320px] border border-brand-ink/15 p-8 hover:bg-brand-ink hover:text-brand-cream transition-colors duration-500"
+              >
+                <span className="eyebrow text-brand-gold">{t("work_browse_label")}</span>
+                <div>
+                  <h3 className="font-serif text-3xl font-light leading-tight mb-3">
+                    {t("work_browse_heading_plain")}{" "}
+                    <span className="italic">{t("work_browse_heading_emph")}</span>.
+                  </h3>
+                  <span className="inline-flex items-center gap-2 eyebrow text-[9px]">
+                    {t("work_browse_cta")} <ArrowUpRight className="w-3.5 h-3.5 rtl:-scale-x-100" />
+                  </span>
+                </div>
+              </Link>
+            </Reveal>
+          )}
         </div>
       </div>
     </section>

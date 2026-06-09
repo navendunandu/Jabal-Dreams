@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { projects } from "@/app/lib/projects";
 import { slugify } from "@/app/lib/work";
 import { projTitle } from "@/app/lib/i18n";
@@ -25,25 +25,30 @@ function columnImages(ci: number): Tile[] {
 
 export default function HeroCollage() {
   const { lang } = useLang();
+  const reduceMotion = useReducedMotion();
   return (
     <div className="absolute inset-0 flex gap-1.5 px-1.5 bg-brand-ink/5">
       {Array.from({ length: COLS }).map((_, ci) => {
         const imgs = columnImages(ci);
-        const loop = [...imgs, ...imgs];
+        const loop = reduceMotion ? imgs : [...imgs, ...imgs];
         const up = ci % 2 === 0;
         return (
           <div key={ci} className="relative flex-1 overflow-hidden">
             <motion.div
               className="absolute inset-x-0 top-0 flex flex-col gap-1.5"
-              animate={{ y: up ? ["0%", "-50%"] : ["-50%", "0%"] }}
-              transition={{ duration: DURATIONS[ci % DURATIONS.length], ease: "linear", repeat: Infinity }}
+              animate={reduceMotion ? undefined : { y: up ? ["0%", "-50%"] : ["-50%", "0%"] }}
+              transition={
+                reduceMotion
+                  ? undefined
+                  : { duration: DURATIONS[ci % DURATIONS.length], ease: "linear", repeat: Infinity }
+              }
             >
               {loop.map((img, k) => {
                 const title = projTitle(img.pslug, lang);
                 return (
                 <Link
                   key={`${ci}-${k}`}
-                  href={`/work/${img.slug}`}
+                  href={`/work/${img.slug}/${img.pslug}`}
                   aria-label={title}
                   className="group relative block w-full overflow-hidden"
                   style={{ aspectRatio: `${img.w} / ${img.h}` }}

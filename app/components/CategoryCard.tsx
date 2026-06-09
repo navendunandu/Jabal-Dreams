@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import type { CategoryMeta } from "@/app/lib/work";
@@ -26,6 +26,7 @@ export default function CategoryCard({
   index: number;
 }) {
   const { t, lang } = useLang();
+  const reduceMotion = useReducedMotion();
   const name = catName(category.name, lang);
   const note = catNote(category.name, lang);
   const pool = category.images;
@@ -36,7 +37,7 @@ export default function CategoryCard({
   const [pos, setPos] = useState(0);
 
   useEffect(() => {
-    if (pool.length <= 1) return;
+    if (pool.length <= 1 || reduceMotion) return;
     const to = setTimeout(() => setOrder(shuffle(pool.length)), 0);
     const interval = 3200 + index * 500 + Math.random() * 900;
     const t = setInterval(() => setPos((p) => p + 1), interval);
@@ -44,7 +45,7 @@ export default function CategoryCard({
       clearTimeout(to);
       clearInterval(t);
     };
-  }, [pool.length, index]);
+  }, [pool.length, index, reduceMotion]);
 
   const slot = pos % order.length;
   const current = pool[order[slot]] ?? pool[0];
@@ -56,10 +57,14 @@ export default function CategoryCard({
           <motion.div
             key={current.src}
             className="absolute inset-0"
-            initial={{ opacity: 0, scale: 1.07 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 1.07 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1.2, ease: "easeInOut" }, scale: { duration: 6, ease: "linear" } }}
+            exit={reduceMotion ? undefined : { opacity: 0 }}
+            transition={
+              reduceMotion
+                ? { duration: 0 }
+                : { opacity: { duration: 1.2, ease: "easeInOut" }, scale: { duration: 6, ease: "linear" } }
+            }
           >
             <Image
               src={current.src}

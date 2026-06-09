@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
 type Props = {
@@ -27,6 +27,7 @@ export default function Watermark({
   className = "",
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -43,9 +44,9 @@ export default function Watermark({
     >
       <motion.div
         style={{
-          y,
-          rotate,
-          scale,
+          y: reduceMotion ? undefined : y,
+          rotate: reduceMotion ? undefined : rotate,
+          scale: reduceMotion ? undefined : scale,
           opacity,
           backgroundImage: "url('/brand/firefly.webp')",
         }}

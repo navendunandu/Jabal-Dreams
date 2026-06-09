@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat, El_Messiri, Cairo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider } from "./components/lang-context";
+import { company } from "./lib/site";
 import "./globals.css";
+
+const siteUrl = "https://jabaldreams.com";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -35,7 +38,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://jabaldreams.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Jabal Dreams | Architectural Art, Sculptures & Heritage Restoration in Oman",
     template: "%s | Jabal Dreams",
@@ -65,12 +68,22 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Jabal Dreams",
     locale: "en_US",
+    url: "/",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Jabal Dreams architectural art, sculpture, and heritage restoration",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Jabal Dreams | Architectural Art & Heritage Restoration in Oman",
     description:
       "Sculptural art, heritage restoration, and creative fabrication based in Muscat, Oman.",
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -80,6 +93,37 @@ export const metadata: Metadata = {
     canonical: "/",
   },
 };
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: company.legalName,
+  alternateName: company.brand,
+  url: siteUrl,
+  image: `${siteUrl}/opengraph-image`,
+  email: company.email,
+  telephone: company.phones,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: company.street,
+    addressLocality: "Muscat",
+    postalCode: company.pc,
+    postOfficeBoxNumber: company.poBox,
+    addressCountry: "OM",
+  },
+  areaServed: "Sultanate of Oman",
+  description: company.intro,
+};
+
+const languageBootScript = `
+try {
+  var saved = localStorage.getItem("jd-lang");
+  if (saved === "ar" || saved === "en") {
+    document.documentElement.lang = saved;
+    document.documentElement.dir = saved === "ar" ? "rtl" : "ltr";
+  }
+} catch (e) {}
+`;
 
 export default function RootLayout({
   children,
@@ -92,6 +136,11 @@ export default function RootLayout({
       className={`${cormorant.variable} ${montserrat.variable} ${elMessiri.variable} ${cairo.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col">
+        <script dangerouslySetInnerHTML={{ __html: languageBootScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <LanguageProvider>{children}</LanguageProvider>
         <Analytics />
       </body>

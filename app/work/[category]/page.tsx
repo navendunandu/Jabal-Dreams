@@ -7,6 +7,8 @@ import Footer from "@/app/components/Footer";
 import Contact from "@/app/components/Contact";
 import CategoryView from "@/app/components/CategoryView";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return categoryList.map((c) => ({ category: c.slug }));
 }
@@ -23,6 +25,26 @@ export async function generateMetadata({
     title: `${cat.name} — Selected Work`,
     description: cat.note,
     alternates: { canonical: `/work/${cat.slug}` },
+    openGraph: {
+      title: `${cat.name} — Selected Work | Jabal Dreams`,
+      description: cat.note,
+      images: cat.cover
+        ? [
+            {
+              url: cat.cover.src,
+              width: cat.cover.w,
+              height: cat.cover.h,
+              alt: `${cat.name} selected work by Jabal Dreams`,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${cat.name} — Selected Work | Jabal Dreams`,
+      description: cat.note,
+      images: cat.cover ? [cat.cover.src] : undefined,
+    },
   };
 }
 

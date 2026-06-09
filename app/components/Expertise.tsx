@@ -63,12 +63,16 @@ export default function Expertise() {
           {items.map((s, i) => {
             const Icon = ICONS[s.icon] ?? Landmark;
             const isOpen = open === i;
+            const buttonId = `expertise-${s.id}-button`;
+            const panelId = `expertise-${s.id}-panel`;
             return (
               <div key={s.id} className="border-b border-brand-ink/15">
                 <button
+                  id={buttonId}
                   onClick={() => setOpen(isOpen ? -1 : i)}
                   className="group w-full flex items-center gap-5 md:gap-8 py-6 md:py-7 text-start"
                   aria-expanded={isOpen}
+                  aria-controls={panelId}
                 >
                   <span className="font-serif text-sm text-brand-gold/70 w-7 shrink-0">
                     {String(i + 1).padStart(2, "0")}
@@ -102,6 +106,9 @@ export default function Expertise() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
                     >
                       <div className="ps-0 md:ps-[80px] pb-9 grid md:grid-cols-12 gap-8">
                         <p className="md:col-span-5 text-brand-ink/65 leading-relaxed text-sm">
