@@ -69,9 +69,10 @@ export const UI: Record<Lang, Record<string, string>> = {
     modal_location_ph: "City, Country",
     modal_details: "Project details",
     modal_details_ph: "Tell us about your space and vision…",
-    modal_send: "Send Inquiry",
-    modal_success_heading: "Message received",
-    modal_success_body: "Thank you for reaching out. We will be in touch shortly.",
+    modal_send: "Open Email Draft",
+    modal_success_heading: "Email draft opened",
+    modal_success_body:
+      "Please send the prepared email from your mail app. You can also write to jabaldreams@gmail.com directly.",
     footer_explore: "Explore",
     footer_get_in_touch: "Get in Touch",
     footer_desc_plain:
@@ -141,9 +142,10 @@ export const UI: Record<Lang, Record<string, string>> = {
     modal_location_ph: "المدينة، الدولة",
     modal_details: "تفاصيل المشروع",
     modal_details_ph: "حدّثنا عن مساحتك ورؤيتك…",
-    modal_send: "إرسال الاستفسار",
-    modal_success_heading: "تم استلام رسالتك",
-    modal_success_body: "شكراً لتواصلك معنا. سنعاود الاتصال بك قريباً.",
+    modal_send: "فتح مسودة البريد",
+    modal_success_heading: "تم فتح مسودة البريد",
+    modal_success_body:
+      "يرجى إرسال البريد من تطبيق البريد لديك. يمكنك أيضاً مراسلتنا مباشرة على jabaldreams@gmail.com.",
     footer_explore: "استكشف",
     footer_get_in_touch: "تواصل معنا",
     footer_desc_plain: "فنٌ معماري وترميم تراثي وتصنيع إبداعي، ومقرّنا في",

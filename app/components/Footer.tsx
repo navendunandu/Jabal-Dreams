@@ -1,6 +1,5 @@
 "use client";
 
-import { FaInstagram } from "react-icons/fa";
 import { company } from "@/app/lib/site";
 import { locCompany } from "@/app/lib/i18n";
 import { useLang } from "./lang-context";
@@ -62,15 +61,6 @@ export default function Footer() {
               {c.street}، {c.country}
             </li>
           </ul>
-          <div className="flex items-center gap-4 mt-7">
-            <a
-              href="#"
-              aria-label="Instagram"
-              className="w-10 h-10 border border-brand-ink/20 flex items-center justify-center hover:bg-brand-gold hover:text-brand-cream hover:border-brand-gold transition-colors"
-            >
-              <FaInstagram className="w-4 h-4" />
-            </a>
-          </div>
         </div>
       </div>
 

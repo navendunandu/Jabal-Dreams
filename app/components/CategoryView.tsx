@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { CategoryMeta } from "@/app/lib/work";
 import { categoryList } from "@/app/lib/work";
@@ -13,15 +13,30 @@ import Blueprint from "./Blueprint";
 
 type LB = { p: number; i: number } | null;
 
+function getFocusable(root: HTMLElement | null) {
+  if (!root) return [];
+  return Array.from(
+    root.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )
+  ).filter((el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true");
+}
+
 export default function CategoryView({ category }: { category: CategoryMeta }) {
   const { t, lang } = useLang();
   const [lb, setLb] = useState<LB>(null);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+  const lightboxOpenerRef = useRef<HTMLButtonElement | null>(null);
   const others = categoryList.filter((c) => c.slug !== category.slug);
   const projs = category.projects.map((p) => locProject(p, lang));
   const name = catName(category.name, lang);
   const note = catNote(category.name, lang);
 
-  const close = useCallback(() => setLb(null), []);
+  const close = useCallback(() => {
+    setLb(null);
+    window.setTimeout(() => lightboxOpenerRef.current?.focus(), 0);
+  }, []);
   const next = useCallback(() => {
     setLb((s) => {
       if (!s) return s;
@@ -40,12 +55,28 @@ export default function CategoryView({ category }: { category: CategoryMeta }) {
   useEffect(() => {
     if (!lb) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
       if (e.key === "ArrowRight") next();
       if (e.key === "ArrowLeft") prev();
+      if (e.key !== "Tab") return;
+      const focusable = getFocusable(lightboxRef.current);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    lightboxCloseRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
@@ -88,7 +119,9 @@ export default function CategoryView({ category }: { category: CategoryMeta }) {
           return (
           <section
             key={p.slug}
+            id={p.slug}
             className={`py-16 md:py-24 ${pIdx % 2 === 1 ? "bg-brand-sand grain relative" : ""}`}
+            style={{ scrollMarginTop: "6rem" }}
           >
             <div className="relative w-full px-6 sm:px-10 lg:px-16 2xl:px-24">
               <div className="grid md:grid-cols-12 gap-8 md:gap-12 mb-10">
@@ -97,7 +130,12 @@ export default function CategoryView({ category }: { category: CategoryMeta }) {
                     {String(pIdx + 1).padStart(2, "0")}
                   </span>
                   <h2 className="font-serif font-light text-3xl md:text-4xl leading-tight mt-2">
-                    {lp.title}
+                    <Link
+                      href={`/work/${category.slug}/${p.slug}`}
+                      className="hover:text-brand-gold transition-colors"
+                    >
+                      {lp.title}
+                    </Link>
                   </h2>
                   <p className="eyebrow text-[9px] text-brand-stone mt-3 normal-case tracking-[0.15em]">
                     {lp.client ? `${lp.client} · ` : ""}
@@ -115,7 +153,11 @@ export default function CategoryView({ category }: { category: CategoryMeta }) {
                   <motion.button
                     key={im.src}
                     type="button"
-                    onClick={() => setLb({ p: pIdx, i: iIdx })}
+                    onClick={(e) => {
+                      lightboxOpenerRef.current = e.currentTarget;
+                      setLb({ p: pIdx, i: iIdx });
+                    }}
+                    aria-label={`Open ${lp.title} image ${iIdx + 1}`}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-40px" }}
@@ -170,13 +212,18 @@ export default function CategoryView({ category }: { category: CategoryMeta }) {
       <AnimatePresence>
         {lb && lbImg && (
           <motion.div
+            ref={lightboxRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[120] bg-brand-charcoal/96 backdrop-blur-sm flex items-center justify-center"
             onClick={close}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lightbox-title"
           >
             <button
+              ref={lightboxCloseRef}
               onClick={close}
               className="absolute top-5 end-5 z-10 p-3 text-brand-cream/70 hover:text-brand-gold transition-colors"
               aria-label="Close"
@@ -226,7 +273,7 @@ export default function CategoryView({ category }: { category: CategoryMeta }) {
               />
             </motion.div>
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
-              <span className="font-serif text-lg text-brand-cream/90">
+              <span id="lightbox-title" className="font-serif text-lg text-brand-cream/90">
                 {projs[lb.p].title}
               </span>
               <span className="block eyebrow text-[9px] text-brand-gold mt-1">

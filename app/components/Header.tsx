@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X, Globe } from "lucide-react";
 import { useContact } from "./contact-context";
@@ -14,11 +14,28 @@ const links = [
   { key: "nav_studio", href: "/#studio" },
 ];
 
+function getFocusable(root: HTMLElement | null) {
+  if (!root) return [];
+  return Array.from(
+    root.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )
+  ).filter((el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true");
+}
+
 export default function Header({ onDark = false }: { onDark?: boolean }) {
   const { open } = useContact();
   const { t, toggle } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+    window.setTimeout(() => menuButtonRef.current?.focus(), 0);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -26,6 +43,35 @@ export default function Header({ onDark = false }: { onDark?: boolean }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeMenu();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = getFocusable(menuRef.current);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen, closeMenu]);
 
   const cream = onDark && !scrolled;
 
@@ -80,6 +126,7 @@ export default function Header({ onDark = false }: { onDark?: boolean }) {
           </nav>
 
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setMenuOpen(true)}
             className="md:hidden"
@@ -96,11 +143,15 @@ export default function Header({ onDark = false }: { onDark?: boolean }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            ref={menuRef}
             className="fixed inset-0 z-[60] bg-brand-ink text-brand-cream flex flex-col md:hidden grain"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
           >
             <div className="px-8 h-20 flex items-center justify-between">
               <Logo variant="cream" markClassName="h-8 w-auto" />
-              <button onClick={() => setMenuOpen(false)} aria-label="Close menu">
+              <button ref={closeButtonRef} type="button" onClick={closeMenu} aria-label="Close menu">
                 <X className="w-6 h-6" />
               </button>
             </div>
@@ -109,7 +160,7 @@ export default function Header({ onDark = false }: { onDark?: boolean }) {
                 <motion.a
                   key={l.href}
                   href={l.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closeMenu}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.08 * i + 0.1 }}
