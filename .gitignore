@@ -34,3 +34,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ref: raw PDF extraction artifacts (intermediate; optimized assets live in /public)
+/Ref/extracted/
+/Ref/*.log
+*.log
+
+# OCR tooling artifact (tesseract trained data; not part of the site)
+eng.traineddata
