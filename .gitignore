@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local PDF-extraction scaffolding (not part of the app)
+/.tmp_extract

@@ -18,35 +18,45 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const SITE_DESCRIPTION =
+  "Jabal Dreams is a creative fabrication, architectural enhancement, and heritage restoration studio in Muscat, Oman — delivering sculptural features, texture murals, 3D architectural elements, water features, and detailed scale models from concept to installation.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://jabaldreams.com"),
-  title: "Jabal Dreams | Website Under Construction",
-  description:
-    "Jabal Dreams is an interior design company crafting timeless, elegant spaces. Our new website is currently under construction.",
+  title: {
+    default: "Jabal Dreams | Architectural Art, Heritage Restoration & Creative Fabrication",
+    template: "%s | Jabal Dreams",
+  },
+  description: SITE_DESCRIPTION,
   keywords: [
     "Jabal Dreams",
-    "interior design",
-    "interior designing company",
-    "luxury interiors",
-    "website under construction",
+    "architectural art",
+    "heritage restoration",
+    "creative fabrication",
+    "sculptural wall art",
+    "texture murals",
+    "scale models",
+    "archaeological conservation",
+    "Muscat",
+    "Oman",
   ],
   applicationName: "Jabal Dreams",
   authors: [{ name: "Jabal Dreams" }],
   creator: "Jabal Dreams",
   publisher: "Jabal Dreams",
   openGraph: {
-    title: "Jabal Dreams | Website Under Construction",
-    description:
-      "We are designing our new digital home. Explore Jabal Dreams, where timeless interior design meets modern living.",
+    title: "Jabal Dreams | Preserving the Past, Crafting the Future",
+    description: SITE_DESCRIPTION,
     type: "website",
     siteName: "Jabal Dreams",
     locale: "en_US",
+    images: [{ url: "/portfolio/jd-34.webp", width: 1024, height: 1024, alt: "Jabal Dreams craftsmanship" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jabal Dreams | Website Under Construction",
-    description:
-      "Jabal Dreams is an interior design company. Our new website is currently under construction.",
+    title: "Jabal Dreams | Preserving the Past, Crafting the Future",
+    description: SITE_DESCRIPTION,
+    images: ["/portfolio/jd-34.webp"],
   },
   robots: {
     index: true,

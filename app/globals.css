@@ -15,7 +15,42 @@
     min-height: 100%;
   }
 
+  html {
+    scroll-behavior: smooth;
+    /* offset in-page anchor jumps for the fixed header */
+    scroll-padding-top: 6rem;
+  }
+
   body {
     @apply bg-brand-cream text-brand-ink font-sans antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-gold);
+    color: var(--color-brand-cream);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* refined scrollbar (cream/gold) */
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-brand-cream);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-brand-ink) 25%, transparent);
+    border: 3px solid var(--color-brand-cream);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand-gold);
   }
 }
