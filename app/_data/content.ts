@@ -15,9 +15,13 @@ export const BRAND = {
   tagline: "Preserving the Past, Crafting the Future.",
   location: "Muscat, Oman",
   email: "jabaldreams@gmail.com",
-  phone: "+968 9910 6834", // TODO: confirm real number (placeholder)
+  phone: "+968 9910 6834",
   domain: "jabaldreams.com",
   established: "2026",
+  // Social
+  instagram: "https://www.instagram.com/jd.walls",
+  instagramHandle: "Jd.walls",
+  facebook: "https://www.facebook.com/profile.php?id=61590998282073",
   disciplines: [
     "Architectural Art",
     "Heritage Restoration",
@@ -332,4 +336,15 @@ export const NAV_LINKS = [
   { href: "#expertise", label: "Expertise" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
+];
+
+// ---------------------------------------------------------------------------
+// Social links (footer). Pinterest intentionally left blank for now.
+// ---------------------------------------------------------------------------
+export type Social = { platform: "instagram" | "pinterest" | "facebook"; href: string };
+
+export const SOCIALS: Social[] = [
+  { platform: "instagram", href: BRAND.instagram },
+  { platform: "pinterest", href: "" }, // left blank until a Pinterest page exists
+  { platform: "facebook", href: BRAND.facebook },
 ];

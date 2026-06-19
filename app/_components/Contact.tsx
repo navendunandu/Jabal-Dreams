@@ -1,6 +1,7 @@
 "use client";
 
 import { Mail, MapPin, Phone } from "lucide-react";
+import { FaInstagram } from "react-icons/fa";
 import { BRAND } from "../_data/content";
 import { Blueprint } from "./Blueprint";
 import { ContactForm } from "./ContactForm";
@@ -63,6 +64,19 @@ export function Contact() {
                 </span>
                 <span className="font-sans text-sm tracking-wide">{BRAND.location}</span>
               </div>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <a
+                href={BRAND.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 hover:text-brand-gold transition-colors"
+              >
+                <span className="w-10 h-10 border border-brand-cream/20 flex items-center justify-center group-hover:border-brand-gold transition-colors">
+                  <FaInstagram className="w-4 h-4" />
+                </span>
+                <span className="font-sans text-sm tracking-wide">{BRAND.instagramHandle}</span>
+              </a>
             </Reveal>
           </div>
         </div>

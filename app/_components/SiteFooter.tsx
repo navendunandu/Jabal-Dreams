@@ -1,8 +1,14 @@
 "use client";
 
-import { FaInstagram, FaPinterestP, FaLinkedinIn } from "react-icons/fa";
-import { BRAND, NAV_LINKS, SERVICES } from "../_data/content";
+import { FaInstagram, FaPinterestP, FaFacebookF } from "react-icons/fa";
+import { BRAND, NAV_LINKS, SERVICES, SOCIALS } from "../_data/content";
 import { Logo } from "./Logo";
+
+const SOCIAL_ICONS = {
+  instagram: FaInstagram,
+  pinterest: FaPinterestP,
+  facebook: FaFacebookF,
+} as const;
 
 export function SiteFooter({ onContact }: { onContact: () => void }) {
   return (
@@ -12,20 +18,27 @@ export function SiteFooter({ onContact }: { onContact: () => void }) {
           {/* Brand */}
           <div className="md:col-span-5">
             <Logo variant="dark" height={48} />
-            <p className="mt-6 font-serif italic text-2xl text-brand-ink/80 max-w-sm leading-snug">
+            <p className=" font-serif italic text-2xl text-brand-ink/80 max-w-sm leading-snug">
               {BRAND.tagline}
             </p>
             <div className="mt-7 flex items-center gap-4">
-              {[FaInstagram, FaPinterestP, FaLinkedinIn].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  aria-label="Social link"
-                  className="w-9 h-9 border border-brand-ink/15 flex items-center justify-center text-brand-ink/50 hover:text-brand-gold hover:border-brand-gold transition-colors"
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                </a>
-              ))}
+              {SOCIALS.map(({ platform, href }) => {
+                const Icon = SOCIAL_ICONS[platform];
+                const isLink = href !== "";
+                return (
+                  <a
+                    key={platform}
+                    href={isLink ? href : "#"}
+                    {...(isLink
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : { "aria-disabled": true, tabIndex: -1 })}
+                    aria-label={platform.charAt(0).toUpperCase() + platform.slice(1)}
+                    className="w-9 h-9 border border-brand-ink/15 flex items-center justify-center text-brand-ink/50 hover:text-brand-gold hover:border-brand-gold transition-colors"
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
