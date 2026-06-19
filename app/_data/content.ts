@@ -14,8 +14,8 @@ export const BRAND = {
   monogram: "JD",
   tagline: "Preserving the Past, Crafting the Future.",
   location: "Muscat, Oman",
-  email: "hello@jabaldreams.com",
-  phone: "+968 2400 0000", // TODO: confirm real number (placeholder)
+  email: "jabaldreams@gmail.com",
+  phone: "+968 9910 6834", // TODO: confirm real number (placeholder)
   domain: "jabaldreams.com",
   established: "2026",
   disciplines: [
