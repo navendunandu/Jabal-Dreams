@@ -64,7 +64,7 @@ export function SectionLabel({
       className={`flex items-center gap-4 ${align === "center" ? "justify-center" : ""} ${className}`}
     >
       <span className="h-px w-12 bg-brand-gold" />
-      <span className="font-sans uppercase tracking-[0.4em] text-[10px] text-brand-gold font-bold">
+      <span className="font-sans uppercase tracking-[0.25em] sm:tracking-[0.4em] text-[11px] sm:text-[10px] text-brand-gold font-bold text-balance">
         {children}
       </span>
       {align === "center" && <span className="h-px w-12 bg-brand-gold" />}

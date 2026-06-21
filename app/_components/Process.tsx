@@ -5,7 +5,7 @@ import { Reveal, SectionLabel } from "./primitives";
 
 export function Process() {
   return (
-    <section className="relative py-24 md:py-32">
+    <section className="relative py-16 sm:py-20 lg:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-12">
         <div className="max-w-2xl">
           <Reveal>

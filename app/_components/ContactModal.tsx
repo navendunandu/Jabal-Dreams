@@ -43,7 +43,7 @@ export function ContactModal({ open, onClose }: { open: boolean; onClose: () => 
             {/* Brand panel */}
             <div className="hidden md:flex w-2/5 bg-brand-ink text-brand-cream p-10 flex-col justify-between">
               <div>
-                <Logo variant="light" height={44} />
+                <Logo variant="fullLight" height={100} />
                 <h3 className="mt-8 font-serif text-3xl leading-tight">
                   Let&apos;s design <br />
                   <span className="italic text-brand-gold">together.</span>

@@ -27,7 +27,7 @@ const ICONS: Record<string, LucideIcon> = {
 
 export function Services() {
   return (
-    <section id="services" className="relative py-24 md:py-32 bg-brand-cream">
+    <section id="services" className="relative py-16 sm:py-20 lg:py-32 bg-brand-cream">
       <div className="mx-auto max-w-[1400px] px-6 md:px-12">
         <div className="max-w-3xl">
           <Reveal>
@@ -53,12 +53,12 @@ export function Services() {
             return (
               <div
                 key={s.id}
-                className="grid md:grid-cols-2 gap-8 md:gap-16 items-center"
+                className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center"
               >
                 {/* Image */}
                 <Reveal
                   y={36}
-                  className={`relative ${reversed ? "md:order-2" : "md:order-1"}`}
+                  className={`relative ${reversed ? "lg:order-2" : "lg:order-1"}`}
                 >
                   <div className="group relative overflow-hidden">
                     <div
@@ -82,7 +82,7 @@ export function Services() {
                 </Reveal>
 
                 {/* Copy */}
-                <div className={`${reversed ? "md:order-1" : "md:order-2"}`}>
+                <div className={`${reversed ? "lg:order-1" : "lg:order-2"}`}>
                   <Reveal>
                     <span className="font-sans uppercase tracking-[0.3em] text-[10px] font-bold text-brand-gold">
                       {String(i + 1).padStart(2, "0")} / Service

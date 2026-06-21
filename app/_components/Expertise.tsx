@@ -6,10 +6,10 @@ import { Reveal, SectionLabel } from "./primitives";
 
 export function Expertise() {
   return (
-    <section id="expertise" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-12 grid md:grid-cols-12 gap-12 md:gap-20">
+    <section id="expertise" className="relative py-16 sm:py-20 lg:py-32">
+      <div className="mx-auto max-w-[1400px] px-6 md:px-12 grid lg:grid-cols-12 gap-12 lg:gap-20">
         {/* Specialized expertise */}
-        <div className="md:col-span-5">
+        <div className="lg:col-span-5">
           <Reveal>
             <SectionLabel>Specialized Expertise</SectionLabel>
           </Reveal>
@@ -35,8 +35,8 @@ export function Expertise() {
         </div>
 
         {/* Consultancy */}
-        <div className="md:col-span-7">
-          <div className="md:sticky md:top-28 bg-brand-ink text-brand-cream p-8 md:p-12">
+        <div className="lg:col-span-7">
+          <div className="lg:sticky lg:top-28 bg-brand-ink text-brand-cream p-8 lg:p-12">
             <Reveal>
               <div className="flex items-center gap-4">
                 <span className="h-px w-12 bg-brand-gold" />

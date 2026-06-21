@@ -36,9 +36,9 @@ export function Gallery() {
   }, [active, close, next, prev]);
 
   return (
-    <section id="work" className="relative py-24 md:py-32 bg-brand-ink text-brand-cream">
+    <section id="work" className="relative py-16 sm:py-20 lg:py-32 bg-brand-ink text-brand-cream">
       <div className="mx-auto max-w-[1400px] px-6 md:px-12">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
           <div className="max-w-2xl">
             <Reveal>
               <div className="flex items-center gap-4">
@@ -62,9 +62,9 @@ export function Gallery() {
           </Reveal>
         </div>
 
-        <div className="mt-14 [column-fill:_balance] columns-2 md:columns-3 gap-4 md:gap-5">
+        <div className="mt-14 [column-fill:_balance] columns-1 sm:columns-2 lg:columns-3 gap-4 lg:gap-5">
           {GALLERY.map((g, i) => (
-            <Reveal key={g.src} y={24} className="mb-4 md:mb-5 break-inside-avoid">
+            <Reveal key={g.src} y={24} className="mb-4 lg:mb-5 break-inside-avoid">
               <button
                 type="button"
                 onClick={() => setActive(i)}
@@ -76,7 +76,7 @@ export function Gallery() {
                   alt={`Jabal Dreams project ${i + 1}`}
                   width={g.w}
                   height={g.h}
-                  sizes="(max-width: 768px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="w-full h-auto object-cover grayscale-[0.2] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.04]"
                 />
                 <span className="absolute inset-0 bg-brand-ink/0 group-hover:bg-brand-ink/20 transition-colors duration-500" />

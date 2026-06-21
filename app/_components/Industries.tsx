@@ -5,10 +5,10 @@ import { Reveal, SectionLabel } from "./primitives";
 
 export function Industries() {
   return (
-    <section className="relative py-20 md:py-28 bg-brand-cream border-y border-brand-ink/5">
+    <section className="relative py-16 sm:py-20 lg:py-28 bg-brand-cream border-y border-brand-ink/5">
       <div className="mx-auto max-w-[1400px] px-6 md:px-12">
-        <div className="grid md:grid-cols-12 gap-10 items-center">
-          <div className="md:col-span-4">
+        <div className="grid lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-4">
             <Reveal>
               <SectionLabel>Industries We Serve</SectionLabel>
             </Reveal>
@@ -19,7 +19,7 @@ export function Industries() {
             </Reveal>
           </div>
 
-          <div className="md:col-span-8">
+          <div className="lg:col-span-8">
             <div className="flex flex-wrap gap-3">
               {INDUSTRIES.map((ind, i) => (
                 <Reveal as="span" key={ind} delay={i * 0.03}>

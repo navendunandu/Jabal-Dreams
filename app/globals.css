@@ -9,16 +9,39 @@
   --color-brand-gold: #c5a059;
 }
 
+:root {
+  --header-height: 5.5rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-height: 6.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 7rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --header-height: 8.75rem;
+  }
+}
+
 @layer base {
   html,
   body {
     min-height: 100%;
+    overflow-x: clip;
   }
 
   html {
+    position: relative;
     scroll-behavior: smooth;
-    /* offset in-page anchor jumps for the fixed header */
-    scroll-padding-top: 6rem;
+    scroll-padding-top: var(--header-height);
   }
 
   body {

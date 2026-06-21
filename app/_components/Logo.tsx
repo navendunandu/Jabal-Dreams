@@ -1,41 +1,44 @@
 import Image from "next/image";
 import { BRAND } from "../_data/content";
 
+// Brand logo assets supplied from the official brochure (CorelDRAW SVG export).
+// `full`  = emblem + "JDevents" wordmark + tagline lockup.
+// `mark`  = compact emblem only (used in the scrolled/condensed header).
+// `*Light` = cream recolouring for dark surfaces.
 const SRC = {
-  dark: "/jd-logo.png",
-  light: "/jd-logo-light.png",
-  gold: "/jd-logo-gold.png",
+  full: { src: "/JD_LOGO_FULL.svg", w: 3712, h: 3140 },
+  fullLight: { src: "/JD_LOGO_FULL_light.svg", w: 3712, h: 3140 },
+  mark: { src: "/JD_LOGO.svg", w: 1937, h: 2556 },
+  markLight: { src: "/JD_LOGO_light.svg", w: 1937, h: 2556 },
 } as const;
 
-// Intrinsic dimensions of the extracted logo lockup.
-const W = 511;
-const H = 202;
-
 /**
- * Logo — the brand lockup extracted from the company brochure.
- * `variant` picks the colour treatment for light vs. dark surfaces.
- * `height` sets the rendered height in px (width scales automatically).
+ * Logo — renders the brand logo at a given pixel height (width scales with the
+ * artwork's aspect ratio). SVGs are served unoptimized so the vector stays crisp.
  */
 export function Logo({
-  variant = "dark",
-  height = 38,
+  variant = "full",
+  height,
   className = "",
   priority = false,
 }: {
   variant?: keyof typeof SRC;
+  /** Pixel height fallback when no Tailwind h-* classes are passed via className. */
   height?: number;
   className?: string;
   priority?: boolean;
 }) {
+  const { src, w, h } = SRC[variant];
   return (
     <Image
-      src={SRC[variant]}
+      src={src}
       alt={`${BRAND.name} logo`}
-      width={W}
-      height={H}
+      width={w}
+      height={h}
       priority={priority}
-      style={{ height, width: "auto" }}
-      className={className}
+      unoptimized
+      style={height != null ? { height, width: "auto" } : undefined}
+      className={`w-auto ${className}`}
     />
   );
 }

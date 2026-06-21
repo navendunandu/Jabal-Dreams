@@ -9,11 +9,11 @@ import { Reveal } from "./primitives";
 
 export function Contact() {
   return (
-    <section id="contact" className="relative py-24 md:py-32 bg-brand-ink text-brand-cream overflow-hidden">
+    <section id="contact" className="relative py-16 sm:py-20 lg:py-32 bg-brand-ink text-brand-cream overflow-hidden">
       <Blueprint className="opacity-[0.04] text-brand-cream" />
-      <div className="relative z-10 mx-auto max-w-[1400px] px-6 md:px-12 grid md:grid-cols-12 gap-12 md:gap-16">
+      <div className="relative z-10 mx-auto max-w-[1400px] px-6 md:px-12 grid lg:grid-cols-12 gap-12 lg:gap-16">
         {/* Left: invitation + details */}
-        <div className="md:col-span-5">
+        <div className="lg:col-span-5">
           <Reveal>
             <div className="flex items-center gap-4">
               <span className="h-px w-12 bg-brand-gold" />
@@ -82,9 +82,9 @@ export function Contact() {
         </div>
 
         {/* Right: form */}
-        <div className="md:col-span-7">
+        <div className="lg:col-span-7">
           <Reveal delay={0.1}>
-            <div className="bg-brand-cream/[0.04] border border-brand-cream/10 p-8 md:p-10">
+            <div className="bg-brand-cream/[0.04] border border-brand-cream/10 p-8 lg:p-10">
               <ContactForm tone="dark" />
             </div>
           </Reveal>

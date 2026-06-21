@@ -8,10 +8,10 @@ import { Reveal, SectionLabel } from "./primitives";
 export function About() {
   const reduce = useReducedMotion();
   return (
-    <section id="about" className="relative py-24 md:py-36">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-12 grid md:grid-cols-12 gap-12 md:gap-16 items-center">
+    <section id="about" className="relative py-16 sm:py-20 lg:py-32">
+      <div className="mx-auto max-w-[1400px] px-6 md:px-12 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Feature image */}
-        <div className="md:col-span-5 order-2 md:order-1">
+        <div className="lg:col-span-5 order-2 lg:order-1">
           <Reveal>
             <motion.div
               animate={reduce ? undefined : { y: [0, -14, 0] }}
@@ -31,7 +31,7 @@ export function About() {
         </div>
 
         {/* Copy */}
-        <div className="md:col-span-7 order-1 md:order-2">
+        <div className="lg:col-span-7 order-1 lg:order-2">
           <Reveal>
             <SectionLabel>{ABOUT.eyebrow}</SectionLabel>
           </Reveal>

@@ -14,10 +14,10 @@ export function SiteFooter({ onContact }: { onContact: () => void }) {
   return (
     <footer className="relative bg-brand-cream border-t border-brand-ink/10">
       <div className="mx-auto max-w-[1400px] px-6 md:px-12 py-16 md:py-20">
-        <div className="grid md:grid-cols-12 gap-10">
+        <div className="grid lg:grid-cols-12 gap-10">
           {/* Brand */}
-          <div className="md:col-span-5">
-            <Logo variant="dark" height={48} />
+          <div className="lg:col-span-5">
+            <Logo variant="full" className="h-16 sm:h-24 lg:h-32" />
             <p className=" font-serif italic text-2xl text-brand-ink/80 max-w-sm leading-snug">
               {BRAND.tagline}
             </p>
@@ -43,7 +43,7 @@ export function SiteFooter({ onContact }: { onContact: () => void }) {
           </div>
 
           {/* Navigate */}
-          <div className="md:col-span-3">
+          <div className="lg:col-span-3">
             <h4 className="font-sans uppercase tracking-[0.2em] text-[10px] font-bold text-brand-ink/40">
               Navigate
             </h4>
@@ -62,7 +62,7 @@ export function SiteFooter({ onContact }: { onContact: () => void }) {
           </div>
 
           {/* Services */}
-          <div className="md:col-span-4">
+          <div className="lg:col-span-4">
             <h4 className="font-sans uppercase tracking-[0.2em] text-[10px] font-bold text-brand-ink/40">
               Disciplines
             </h4>
